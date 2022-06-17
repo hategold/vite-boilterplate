@@ -1,22 +1,31 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/rtkHooks'
-import { connectWallet } from '../../slices/walletSlice'
+import { RootState } from '../../reducer'
+import { initConnectAction, resetAppAction } from '../../slices/web3Slice'
+import { useAppDispatch } from '../../store'
 
 const Testing = () => {
-  const count = useAppSelector((state) => state.wallet.count)
   const dispatch = useAppDispatch()
-  const handleAdd = () => {
-    dispatch(connectWallet())
+  const initConnect = () => dispatch(initConnectAction())
+  const resetApp = () => dispatch(resetAppAction())
+  const web3State = useSelector((state: RootState) => state.web3State)
+  console.log(web3State)
+  const handleConnect = () => {
+    initConnect()
+  }
+  const handleReset = () => {
+    resetApp()
   }
 
   return (
-    <Box>
+    <Flex m="1rem" alignItems={'center'} w="100%" flexDirection={'column'}>
       <Box>Testing</Box>
-      <Box>{count}</Box>
-      <Button onClick={handleAdd}>Add</Button>
-    </Box>
+      <Box>Account: {web3State.account}</Box>
+      <Button onClick={handleConnect}>Connect</Button>
+      <Button onClick={handleReset}>Reset</Button>
+    </Flex>
   )
 }
 

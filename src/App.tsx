@@ -1,12 +1,12 @@
 import { Provider } from 'react-redux'
 
-import MainRouter from './MainRouter'
+import CoreApp from './CoreApp'
 import { store } from './store'
 
 function App() {
   return (
     <Provider store={store}>
-      <MainRouter />
+      <CoreApp />
     </Provider>
   )
 }
